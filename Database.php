@@ -19,9 +19,13 @@ class Database implements DatabaseInterface
         $this->mysqli = $mysqli;
     }
 
-    public function buildQuery(string $query, array $args = []): string
+    public function buildQuery(string $query, array $args = []): string|false
     {
-        return QueryParser::parse($query, $this->skip(), $args);
+        if (QueryValidator::validate($query, $args)) {
+            return QueryParser::parse($query, $this->skip(), $args);
+        }
+
+        return false;
     }
 
     public function skip(): float

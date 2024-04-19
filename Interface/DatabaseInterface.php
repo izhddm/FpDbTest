@@ -10,9 +10,9 @@ interface DatabaseInterface
      * @param string $query Исходный запрос.
      * @param array  $args  Аргументы для замены.
      *
-     * @return string Конечный запрос.
+     * @return string|false Конечный запрос или false если произошла ошибка.
      */
-    public function buildQuery(string $query, array $args = []): string;
+    public function buildQuery(string $query, array $args = []): string|false;
 
     /**
      * Получает значение, указывающее на пропуск условного блока.
