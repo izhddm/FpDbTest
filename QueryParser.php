@@ -1,14 +1,15 @@
 <?php
+
 namespace FpDbTest;
 
 use FpDbTest\Factory\ParameterHandlerFactory;
 use FpDbTest\Interface\QueryParserInterface;
+use FpDbTest\Traits\QueryConstantTrait;
 
 class QueryParser implements QueryParserInterface
 {
-    private const string PLACEHOLDER_SIGN = '?';
-    private const string CONDITIONAL_BLOCK_BEGIN = '{';
-    private const string CONDITIONAL_BLOCK_END = '}';
+    use QueryConstantTrait;
+
     private const string REGEX = '/(\?([a-z#]|))|({[^{}]*})/';
 
     public static function parse(string $query, float $skip, array $args = []): string
@@ -50,6 +51,7 @@ class QueryParser implements QueryParserInterface
 
         if (in_array($skip, $subArgs, true)) {
             $offset += $countArgs;
+
             return '';
         }
 
