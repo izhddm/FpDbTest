@@ -12,9 +12,9 @@ class Database implements DatabaseInterface
 {
     private const float SKIP = INF;
 
-    private ?mysqli $mysqli;
+    private mysqli $mysqli;
 
-    public function __construct(?mysqli $mysqli)
+    public function __construct(mysqli $mysqli)
     {
         $this->mysqli = $mysqli;
     }

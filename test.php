@@ -12,12 +12,11 @@ spl_autoload_register(function ($class) {
     require_once $filename;
 });
 
-//$mysqli = @new mysqli('localhost', 'root', 'password', 'database', 3306);
-//if ($mysqli->connect_errno) {
-//    throw new Exception($mysqli->connect_error);
-//}
+$mysqli = @new mysqli('localhost', 'root', 'password', 'database', 3306);
+if ($mysqli->connect_errno) {
+    throw new Exception($mysqli->connect_error);
+}
 
-$mysqli = null;
 $db = new Database($mysqli);
 $test = new DatabaseTest($db);
 $test->testBuildQuery();
