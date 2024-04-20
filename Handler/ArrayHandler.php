@@ -16,7 +16,7 @@ class ArrayHandler implements ParameterHandlerInterface, MysqliRequiredInterface
     public function handle($value): string
     {
         if (!is_array($value)) {
-            throw new InvalidArgumentException("Expected Array, got ".gettype($value));
+            throw new InvalidArgumentException('Expected Array, got '.gettype($value));
         }
 
         $isAssociativeArray = $this->isAssociativeArray($value);

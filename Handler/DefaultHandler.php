@@ -15,23 +15,12 @@ class DefaultHandler implements ParameterHandlerInterface, MysqliRequiredInterfa
 
     public function handle($value): string
     {
-        if (is_string($value)) {
-            return (new StringHandler($this->mysqli))->handle($value);
-        }
-
-        if (is_null($value)) {
-            return (new NullHandler())->handle($value);
-        }
-
-        if (is_bool($value)) {
-            return (new BooleanHandler())->handle($value);
-        }
-
-        if (is_int($value) || is_float($value)) {
-            return $value;
-        }
-
-        // Если тип не соответствует ни одному из допустимых, выбрасываем исключение
-        throw new InvalidArgumentException("Unsupported value type: ".gettype($value));
+        return match (true) {
+            is_string($value) => (new StringHandler($this->mysqli))->handle($value),
+            is_null($value) => (new NullHandler())->handle($value),
+            is_bool($value) => (new BooleanHandler())->handle($value),
+            is_int($value), is_float($value) => $value,
+            default => new InvalidArgumentException('Unsupported value type: '.gettype($value))
+        };
     }
 }
