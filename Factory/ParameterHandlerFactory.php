@@ -8,6 +8,7 @@ use FpDbTest\Handler\FloatHandler;
 use FpDbTest\Handler\IdentifierHandler;
 use FpDbTest\Handler\IntHandler;
 use FpDbTest\Handler\StringHandler;
+use InvalidArgumentException;
 
 class ParameterHandlerFactory
 {
@@ -19,7 +20,8 @@ class ParameterHandlerFactory
             '?s' => new StringHandler(),
             '?a' => new ArrayHandler(),
             '?#' => new IdentifierHandler(),
-            default => new DefaultHandler(),
+            '?' => new DefaultHandler(),
+            default => throw new InvalidArgumentException('Unsupported specifier: '.$specifier),
         };
     }
 }
