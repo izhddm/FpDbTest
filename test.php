@@ -3,6 +3,7 @@
 use FpDbTest\Database;
 use FpDbTest\DatabaseTest;
 
+// TODO: подумать над изменением файловой структуры
 spl_autoload_register(function ($class) {
     $a = array_slice(explode('\\', $class), 1);
     if (!$a) {
@@ -12,6 +13,7 @@ spl_autoload_register(function ($class) {
     require_once $filename;
 });
 
+// TODO: Указать явно кодировку
 $mysqli = @new mysqli('localhost', 'root', 'password', 'database', 3306);
 if ($mysqli->connect_errno) {
     throw new Exception($mysqli->connect_error);
