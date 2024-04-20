@@ -16,8 +16,8 @@ class IdentifierHandler implements ParameterHandlerInterface
     }
 
     // Экранирование идентификатора для использования в SQL
-    private function escapeIdentifier($identifier): string
+    private function escapeIdentifier(string $identifier): string
     {
-        return "`" . str_replace("`", "``", $identifier) . "`";
+        return "`".str_replace("`", "``", $identifier)."`";
     }
 }

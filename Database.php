@@ -12,17 +12,14 @@ class Database implements DatabaseInterface
 {
     private const float SKIP = INF;
 
-    private mysqli $mysqli;
-
-    public function __construct(mysqli $mysqli)
+    public function __construct(protected mysqli $mysqli)
     {
-        $this->mysqli = $mysqli;
     }
 
     public function buildQuery(string $query, array $args = []): string|false
     {
         if (QueryValidator::validate($query, $args)) {
-            return QueryParser::parse($query, $this->skip(), $args);
+            return QueryParser::parse($query, $this->skip(), $this->mysqli, $args);
         }
 
         return false;

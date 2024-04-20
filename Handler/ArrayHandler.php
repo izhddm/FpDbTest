@@ -2,11 +2,17 @@
 
 namespace FpDbTest\Handler;
 
+use FpDbTest\Interface\MysqliRequiredInterface;
 use FpDbTest\Interface\ParameterHandlerInterface;
 use InvalidArgumentException;
+use mysqli;
 
-class ArrayHandler implements ParameterHandlerInterface
+class ArrayHandler implements ParameterHandlerInterface, MysqliRequiredInterface
 {
+    public function __construct(protected mysqli $mysqli)
+    {
+    }
+
     public function handle($value): string
     {
         if (!is_array($value)) {
@@ -18,13 +24,13 @@ class ArrayHandler implements ParameterHandlerInterface
 
         foreach ($value as $key => $v) {
             if ($isAssociativeArray) {
-                $result[] = (new IdentifierHandler())->handle($key).' = '.(new DefaultHandler())->handle($v);
+                $result[] = (new IdentifierHandler())->handle($key).' = '.(new DefaultHandler($this->mysqli))->handle($v);
             } else {
-                $result[] = (new DefaultHandler())->handle($v);
+                $result[] = (new DefaultHandler($this->mysqli))->handle($v);
             }
         }
 
-        return implode(", ", $result);
+        return implode(', ', $result);
     }
 
     private function isAssociativeArray(array $array): bool

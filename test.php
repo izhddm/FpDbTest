@@ -9,12 +9,12 @@ spl_autoload_register(function ($class) {
     if (!$a) {
         throw new Exception();
     }
-    $filename = implode('/', [__DIR__, ...$a]) . '.php';
+    $filename = implode('/', [__DIR__, ...$a]).'.php';
     require_once $filename;
 });
 
-// TODO: Указать явно кодировку
 $mysqli = @new mysqli('localhost', 'root', 'password', 'database', 3306);
+$mysqli->set_charset('utf8');
 if ($mysqli->connect_errno) {
     throw new Exception($mysqli->connect_error);
 }

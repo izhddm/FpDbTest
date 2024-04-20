@@ -2,15 +2,21 @@
 
 namespace FpDbTest\Handler;
 
+use FpDbTest\Interface\MysqliRequiredInterface;
 use FpDbTest\Interface\ParameterHandlerInterface;
 use InvalidArgumentException;
+use mysqli;
 
-class DefaultHandler implements ParameterHandlerInterface
+class DefaultHandler implements ParameterHandlerInterface, MysqliRequiredInterface
 {
+    public function __construct(protected mysqli $mysqli)
+    {
+    }
+
     public function handle($value): string
     {
         if (is_string($value)) {
-            return (new StringHandler())->handle($value);
+            return (new StringHandler($this->mysqli))->handle($value);
         }
 
         if (is_null($value)) {

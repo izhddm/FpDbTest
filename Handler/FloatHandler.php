@@ -6,7 +6,7 @@ use FpDbTest\Interface\ParameterHandlerInterface;
 
 class FloatHandler implements ParameterHandlerInterface
 {
-    public function handle($value): float
+    public function handle($value): string|float
     {
         if (is_null($value)) {
             return (new NullHandler())->handle($value);
