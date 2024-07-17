@@ -19,7 +19,9 @@ class Database implements DatabaseInterface
     public function buildQuery(string $query, array $args = []): string|false
     {
         if (QueryValidator::validate($query, $args)) {
-            return QueryParser::parse($query, $this->skip(), $this->mysqli, $args);
+            list($normalizedQuery, $normalizedArgs) = QueryNormalizer::normalize($query, $args);
+
+            return QueryParser::parse($normalizedQuery, $this->skip(), $this->mysqli, $normalizedArgs);
         }
 
         return false;
