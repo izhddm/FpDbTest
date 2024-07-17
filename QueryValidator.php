@@ -9,9 +9,18 @@ class QueryValidator
 {
     use QueryConstantTrait;
 
+    private static function countPlaceholder(string $input): int
+    {
+        $pattern = "/\?(?=(?:[^']*'[^']*')*[^']*$)/";
+
+        preg_match_all($pattern, $input, $matches);
+
+        return count($matches[0]);
+    }
+
     public static function validate(string $query, array $args): bool
     {
-        $countPlaceholders = substr_count($query, self::PLACEHOLDER_SIGN);
+        $countPlaceholders = self::countPlaceholder($query);
 
         $countArgs = count($args);
 
