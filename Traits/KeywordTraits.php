@@ -1,5 +1,7 @@
 <?php
 
+namespace FpDbTest\Traits;
+
 trait KeywordTraits
 {
     private array $keywords

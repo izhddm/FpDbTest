@@ -3,7 +3,7 @@
 namespace FpDbTest;
 
 use FpDbTest\Interface\SqlBuilderInterface;
-use KeywordTraits;
+use FpDbTest\Traits\KeywordTraits;
 
 class SqlBuilder implements SqlBuilderInterface
 {

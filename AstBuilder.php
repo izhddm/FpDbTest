@@ -3,7 +3,7 @@
 namespace FpDbTest;
 
 use FpDbTest\Interface\AstBuilderInterface;
-use KeywordTraits;
+use FpDbTest\Traits\KeywordTraits;
 
 class AstBuilder implements AstBuilderInterface
 {
@@ -16,7 +16,7 @@ class AstBuilder implements AstBuilderInterface
         $currentExpr = [];
 
         foreach ($tokens as $token) {
-            if (preg_match('/^\{.*\}$/', $token)) {
+            if (strlen($token) > 1 && $token[0] === '{' && $token[strlen($token) - 1] === '}') {
                 $blockContent = trim($token, '{}');
                 $blockTokens = (new Tokenizer())->tokenize($blockContent);
                 $currentExpr['CONDITION'] = $blockTokens;
